@@ -24,4 +24,11 @@ public class Solution {
 
         System.out.format("%b %b %b\n", isItem, isBig, isSmall);
     }
+
+    public <T extends Item> T getProxy(Class<? extends Item> returnableClass,Class<?>... classes){
+        Class<?>[] interfaces = new Class[classes.length + 1];
+        System.arraycopy(classes, 0, interfaces, 0, classes.length);
+        interfaces[interfaces.length - 1] = returnableClass;
+        return (T)Proxy.newProxyInstance(returnableClass.getClassLoader(),interfaces,new ItemInvocationHandler());
+    }
 }
